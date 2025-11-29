@@ -1,7 +1,3 @@
-void olah_teks();
-void simpan_ke_biner();
-void ambil_dari_biner(int);
-
 typedef struct {
     int panjang_kata;
     char *kata;
@@ -13,3 +9,8 @@ typedef struct {
     int jumlah_kata;
     Kata *daftar_kata;
 }Abjad;
+
+void olah_teks(char file[]);
+void pengurutan(Abjad abjad[]);
+void simpan_ke_biner();
+void ambil_dari_biner(int);

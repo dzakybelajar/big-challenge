@@ -6,6 +6,26 @@ int main (){
     int pilihan;
     int n;
     int p;
+    char file[20];
+
+    ulang:
+    printf("masukkan nama file(txt):");
+    scanf("%s",file);
+    FILE *fp=fopen(file,"r");
+    int c=fgetc(fp);
+    if (fp==NULL)
+    {
+        printf("file tidak ada isi atau file tidak ditemukan!\n");
+        fclose(fp); goto ulang;
+    }
+    else if (c==EOF)
+    {
+        printf("file tidak ada isi atau file tidak ditemukan!\n");
+        fclose(fp); goto ulang;
+    }
+    rewind(fp);
+    olah_teks(file);
+    fclose(fp);
 
     do
     {   
