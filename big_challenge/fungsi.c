@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<string.h>
 
 typedef struct {
     int panjang_kata;
@@ -16,6 +17,7 @@ void olah_teks(char file[]){}
 
 void pengurutan(Abjad abjad[]){
 
+    //urutin frekuensi
     for (int i = 0; i < 26; i++)
     {   if (abjad[i].jumlah_kata==1)
             { continue; }
@@ -31,7 +33,38 @@ void pengurutan(Abjad abjad[]){
                 }
             }
         }
-    }
+    } 
+
+    //urutin berdasarkan panjang kata atau besar kecilnya kata jika frekuensinya sama
+     for (int i = 0; i < 26; i++)
+    {   if (abjad[i].jumlah_kata==1)
+            { continue; }
+        for ( int n=0; n < abjad[i].jumlah_kata-1; n++)
+        {
+            for (int j=n+1; j > 0; j--)
+            {  
+                if (abjad[i].daftar_kata[j].frekuensi == abjad[i].daftar_kata[j-1].frekuensi )
+                {
+                    if (abjad[i].daftar_kata[j].panjang_kata > abjad[i].daftar_kata[j-1].panjang_kata)
+                    {
+                        Kata temp = abjad[i].daftar_kata[j];
+                        abjad[i].daftar_kata[j] = abjad[i].daftar_kata[j-1];  
+                        abjad[i].daftar_kata[j-1] = temp;
+                    }
+                    else if (abjad[i].daftar_kata[j].panjang_kata == abjad[i].daftar_kata[j-1].panjang_kata)
+                    {
+                        int p=strcmp(abjad[i].daftar_kata[j].kata,abjad[i].daftar_kata[j-1].kata);
+                        if (p>0)
+                        {
+                            Kata temp = abjad[i].daftar_kata[j];
+                            abjad[i].daftar_kata[j] = abjad[i].daftar_kata[j-1];  
+                            abjad[i].daftar_kata[j-1] = temp;
+                        }
+                    }
+                }
+            }
+        }
+    } 
 }
 
 void simpan_ke_biner(Abjad abjd[]){
@@ -61,7 +94,7 @@ void ambil_dari_biner(Abjad abjd_baca[],int n){
     if (fp==NULL)
     {
         printf("file binary tidak ditemukan!\n");
-        fclose(fp); return;
+        return;
     }
     int c=fgetc(fp);
     if (c==EOF)
@@ -73,29 +106,30 @@ void ambil_dari_biner(Abjad abjd_baca[],int n){
 
     //baca file binary
     int i=0;
+    int j;
     while (i!=26)
     {
         fread(&abjd_baca[i].abjad,sizeof(char),1,fp);
         fread(&abjd_baca[i].jumlah_kata,sizeof(int),1,fp);
-        int j=0;
+        j=0;
+        int k=0;
         while (j!=abjd_baca[i].jumlah_kata)
         {
-            fread(&abjd_baca[i].daftar_kata[j].panjang_kata,sizeof(int),1,fp);
-            fread(abjd_baca[i].daftar_kata[j].kata,sizeof(char),abjd_baca[i].daftar_kata[j].panjang_kata,fp);
-            fread(&abjd_baca[i].daftar_kata[j].frekuensi,sizeof(int),1,fp);
-            if (j==n-1)
-            {  while (j!=abjd_baca[i].jumlah_kata)
-                {
-                    fread(&sampah[i].daftar_kata[j].panjang_kata,sizeof(int),1,fp);
-                    fread(sampah[i].daftar_kata[j].kata,sizeof(char),abjd_baca[i].daftar_kata[j].panjang_kata,fp);
-                    fread(&sampah[i].daftar_kata[j].frekuensi,sizeof(int),1,fp);
-                    j++; 
-                } 
-                j--;
+            if (j<n)
+            {
+                fread(&abjd_baca[i].daftar_kata[j].panjang_kata,sizeof(int),1,fp);
+                fread(abjd_baca[i].daftar_kata[j].kata,sizeof(char),abjd_baca[i].daftar_kata[j].panjang_kata+1,fp);
+                fread(&abjd_baca[i].daftar_kata[j].frekuensi,sizeof(int),1,fp); 
+            }
+            
+            else if (j>=n)
+            { 
+                fread(&sampah[i].daftar_kata[k].panjang_kata,sizeof(int),1,fp);
+                fread(sampah[i].daftar_kata[k].kata,sizeof(char),sampah[i].daftar_kata[k].panjang_kata+1,fp);
+                fread(&sampah[i].daftar_kata[k].frekuensi,sizeof(int),1,fp); k++;
             }  
-            j++; 
+            j++;
         }
-        printf("}\n");
         i++;
     }
     
@@ -104,16 +138,19 @@ void ambil_dari_biner(Abjad abjd_baca[],int n){
     while (i!=26)
     {
         printf("%c\t{",abjd_baca[i].abjad);
-        int j=0;
-        while (j!=abjd_baca[i].jumlah_kata)
+        int batas;
+        if (abjd_baca[i].jumlah_kata <= n)
+        { batas=abjd_baca[i].jumlah_kata; }
+        else
+        { batas=n; }
+        
+        j=0;
+        while (j!=batas)
         {
-            if (j==abjd_baca[i].jumlah_kata-1)
-            {
             printf("%s",abjd_baca[i].daftar_kata[j].kata);
-            printf("(%d)",abjd_baca[i].daftar_kata[j].frekuensi); j++; continue;
-            }
-            printf("%s",abjd_baca[i].daftar_kata[j].kata);
-            printf("(%d),",abjd_baca[i].daftar_kata[j].frekuensi);
+            printf("(%d)",abjd_baca[i].daftar_kata[j].frekuensi);
+            if (j<batas-1)
+            { printf(","); }
             j++;
         }
         printf("}\n");
