@@ -175,6 +175,7 @@ void ambil_dari_biner(int n){
             else if (j>=batas)
             { 
                 fread(&sampah[i].daftar_kata[k].panjang_kata,sizeof(int),1,fp);
+                sampah[i].daftar_kata[k].kata=malloc(sampah[i].daftar_kata[k].panjang_kata+1);
                 fread(sampah[i].daftar_kata[k].kata,sizeof(char),sampah[i].daftar_kata[k].panjang_kata+1,fp);
                 fread(&sampah[i].daftar_kata[k].frekuensi,sizeof(int),1,fp); k++;
             }  
