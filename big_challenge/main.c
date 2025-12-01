@@ -10,13 +10,12 @@ int main (){
     printf("masukkan nama file(txt):");
     scanf("%s",file);
     FILE *fp=fopen(file,"r");
-    int c=fgetc(fp);
     if (fp==NULL)
     {
         printf("file tidak ada isi atau file tidak ditemukan!\n");
         fclose(fp); goto ulang;
     }
-    else if (c==EOF)
+    else if (fgetc(fp)==EOF)
     {
         printf("file tidak ada isi atau file tidak ditemukan!\n");
         fclose(fp); goto ulang;
