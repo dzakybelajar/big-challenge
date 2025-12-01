@@ -11,6 +11,7 @@ typedef struct {
 }Abjad;
 
 void olah_teks(char file[]);
+void hitung_frekuensi(Kata frekuensi);
 void pengurutan(Abjad abjad[]);
 void simpan_ke_biner();
 void ambil_dari_biner(int);

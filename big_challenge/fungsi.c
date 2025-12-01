@@ -51,6 +51,7 @@ void olah_teks(char file[]){
     fclose(file);
 }
 
+
 void pengurutan(Abjad abjad[]){
 
     //urutin frekuensi
