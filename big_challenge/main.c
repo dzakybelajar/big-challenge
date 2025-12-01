@@ -13,9 +13,10 @@ int main (){
     if (fp==NULL)
     {
         printf("file tidak ada isi atau file tidak ditemukan!\n");
-        fclose(fp); goto ulang;
+        goto ulang;
     }
-    else if (fgetc(fp)==EOF)
+    int c=fgetc(fp);
+    if (c==EOF)
     {
         printf("file tidak ada isi atau file tidak ditemukan!\n");
         fclose(fp); goto ulang;
