@@ -17,7 +17,7 @@ void olah_teks(char file[]){
     char buffer[500000];
     char *pt = buffer;
     Kata k;
-    FILE *file = fopen("input.txt", "r");
+    FILE *file = fopen(file, "r");
         if (file == NULL) {
             printf("File tidak ditemukan!\n");
             return 1;
