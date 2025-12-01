@@ -13,7 +13,43 @@ typedef struct {
     Kata *daftar_kata;
 }Abjad;
 
-void olah_teks(char file[]){}
+void olah_teks(char file[]){
+        char buffer[500000];
+    char *pt = buffer;
+    Kata k;
+    FILE *file = fopen("input.txt", "r");
+        if (file == NULL) {
+            printf("File tidak ditemukan!\n");
+            return 1;
+        }
+    
+    while(fgets(buffer, sizeof(buffer), file) != 0){
+        if (strcmp(buffer, "<url>") != 0 && strcmp(buffer, "</url>") != 0) {
+            continue;
+        }
+        if(buffer [0] == '<' && buffer [0] == '>' ){
+            continue;
+        }
+        int i = 0;
+        char ch = buffer[i];
+        if((ch >= 32 && ch <= 64) && (ch >= 91 && ch <= 96) && (ch >= 123 && ch <= 126)){
+            i++;
+            continue;
+        }
+    }
+
+    while(*pt != '\0'){
+        if (*pt = buffer[0] || *(pt-1) == ' '){
+            if(*pt >= 'A' && *pt <= 'A')
+                *pt += 32;
+            }
+            else{
+                continue;
+            }
+        pt++;
+    }
+    fclose(file);
+}
 
 void pengurutan(Abjad abjad[]){
 
