@@ -168,9 +168,9 @@ void ambil_dari_biner(int n){
                 printf("%s",abjd_baca[i].daftar_kata[j].kata);
                 fread(&abjd_baca[i].daftar_kata[j].frekuensi,sizeof(int),1,fp); 
                 printf("(%d)",abjd_baca[i].daftar_kata[j].frekuensi);
+                if (j<batas-1)
+                    { printf(","); }
             }
-            if (j<batas-1)
-            { printf(","); }
             
             else if (j>=batas)
             { 
