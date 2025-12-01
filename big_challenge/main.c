@@ -3,9 +3,7 @@
 
 int main (){
 
-    int pilihan;
-    int n;
-    int p;
+    int pilihan,n,p,i=0;
     char file[20];
 
     ulang:
@@ -45,12 +43,12 @@ int main (){
         switch (pilihan)
         {
         case 1:
-            simpan_ke_biner(); int i=1;
+            simpan_ke_biner(); i=1;
             break;
         case 2:
             input_lagi:
-            if (i==1)
-            {
+            if (i!=1)
+            { printf("simpan ke biner terlebih dahulu (pilihan 1)!"); break; }
             printf("banyak kata yang ingin ditampilkan(n):");
             p=scanf("%d",&n);
             if (n<=0 || n>25 || p!=1)
@@ -60,9 +58,6 @@ int main (){
             else
             { ambil_dari_biner(n); }
                 break;
-            }
-            else
-            { printf("pilih menu 1 terlebih dahulu!\n"); goto input_lagi; }
         case 3:
             printf("anda keluar dari program\n"); break;
         default:
