@@ -48,7 +48,7 @@ int main (){
         case 2:
             input_lagi:
             if (i!=1)
-            { printf("simpan ke biner terlebih dahulu (pilihan 1)!"); break; }
+            { printf("simpan ke biner terlebih dahulu (pilihan 1)!\n"); break; }
             printf("banyak kata yang ingin ditampilkan(n):");
             p=scanf("%d",&n);
             if (n<=0 || n>25 || p!=1)
