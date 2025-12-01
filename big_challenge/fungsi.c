@@ -14,7 +14,7 @@ typedef struct {
 }Abjad;
 
 void olah_teks(char file[]){
-        char buffer[500000];
+    char buffer[500000];
     char *pt = buffer;
     Kata k;
     FILE *file = fopen("input.txt", "r");
@@ -50,7 +50,6 @@ void olah_teks(char file[]){
     }
     fclose(file);
 }
-
 
 void pengurutan(Abjad abjad[]){
 
