@@ -28,7 +28,6 @@ for(int i=0;i<26;i++) {
 void olah_teks(char file[]){
     char buffer[500000];
     char *pt = buffer;
-    Kata k;
     FILE *file = fopen(file, "r");
         if (file == NULL) {
             printf("File tidak ditemukan!\n");
@@ -39,8 +38,13 @@ void olah_teks(char file[]){
         if (strcmp(buffer, "<url>") != 0 && strcmp(buffer, "</url>") != 0) {
             continue;
         }
-        if(buffer [0] == '<' && buffer [0] == '>' ){
+        for(int i = 0; buffer[i] != ' '; i++){
+        if(buffer [i] == '<'){
+            while(buffer[i] != '>' && buffer[i] != '\0'){
+                i++;
+            }
             continue;
+        }
         }
         int i = 0;
         char ch = buffer[i];
@@ -51,7 +55,7 @@ void olah_teks(char file[]){
     }
 
     while(*pt != '\0'){
-        if (*pt = buffer[0] || *(pt-1) == ' '){
+        if (*pt == buffer[0] || *(pt-1) == ' '){
             if(*pt >= 'A' && *pt <= 'A')
                 *pt += 32;
             }
