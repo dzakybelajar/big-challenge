@@ -17,6 +17,14 @@ typedef struct {
 Abjad abjad[26];
 Abjad abjd_baca[26];
 
+void inisialisasi(){
+for(int i=0;i<26;i++) {
+    abjad[i].abjad = 'a' + i;
+    abjad[i].jumlah_kata = 0;
+    abjad[i].daftar_kata = NULL;
+}
+}
+
 void olah_teks(char file[]){
     char buffer[500000];
     char *pt = buffer;
