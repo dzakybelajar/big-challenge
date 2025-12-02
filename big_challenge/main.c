@@ -36,7 +36,7 @@ int main (){
 
         if (p!=1)
         {
-            printf("plihan tidak valid!\n");
+            printf("plihan tidak valid!\n\n");
             while (getchar() != '\n'); 
             continue;  
         }
