@@ -35,22 +35,32 @@ void olah_teks(char file[]){
         }
     
     while(fgets(buffer, sizeof(buffer), ft) != 0){
+        
         buffer[strcspn(buffer, "\n")] = '\0';
+
         if (strcmp(buffer, "<url>") == 0){
             continue;
         }
         if (strcmp(buffer, "</url>") == 0) {
             continue;
         }
+        
+        int inTag = 0;
         for(int i = 0; buffer[i] != '\0'; i++){
-            if(buffer [i] == '<'){
-                while(buffer[i] != '>' && buffer[i] != '\0'){
-                    i++;
+            char ch = buffer[i];
+            if (!inTag){
+                if(buffer [i] == '<'){
+                    inTag = 1;
+                    continue;
+                }
+            }
+            else {
+                if(buffer[i] == '>'){
+                    inTag = 0;
                 }
                 continue;
             }
-            char ch = buffer[i];
-             if (ch >= 'A' && ch <= 'Z'){
+            if (ch >= 'A' && ch <= 'Z'){
                 ch += 32;
             }
             if(!(ch >= 'a' && ch <= 'z')){
