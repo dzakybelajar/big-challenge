@@ -27,44 +27,42 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
-    char *pt = buffer;
-    FILE *file = fopen(file, "r");
-        if (file == NULL) {
+    char kata_buffer[100];
+    int idx = 0;
+    inisialisasi();
+    FILE *ft = fopen(file, "r");
+        if (ft == NULL) {
             printf("File tidak ditemukan!\n");
             return 1;
         }
     
-    while(fgets(buffer, sizeof(buffer), file) != 0){
-        if (strcmp(buffer, "<url>") != 0 && strcmp(buffer, "</url>") != 0) {
+    while(fgets(buffer, sizeof(buffer), ft) != 0){
+        buffer[strcspn(buffer, "\n")] = '\0';
+        if (strcmp(buffer, "<url>") == 0){
             continue;
         }
-        for(int i = 0; buffer[i] != ' '; i++){
+        if (strcmp(buffer, "</url>") == 0) {
+            continue;
+        }
+        for(int i = 0; buffer[i] != '\0'; i++){
             if(buffer [i] == '<'){
                 while(buffer[i] != '>' && buffer[i] != '\0'){
                     i++;
                 }
                 continue;
             }
-        }
-        int i = 0;
-        char ch = buffer[i];
-        if((ch >= 32 && ch <= 64) && (ch >= 91 && ch <= 96) && (ch >= 123 && ch <= 126)){
-            i++;
+            char ch = buffer[i];
+             if (ch >= 'A' && ch <= 'Z'){
+                ch += 32;
+            }
+            if(!(ch >= 'a' && ch <= 'z')){
             continue;
+            }
+           
+            abjad[i].abjad = ch;
         }
     }
-
-    while(*pt != '\0'){
-        if (*pt == buffer[0] || *(pt-1) == ' '){
-            if(*pt >= 'A' && *pt <= 'A')
-                *pt += 32;
-            }
-            else{
-                continue;
-            }
-        pt++;
-    }
-    fclose(file);
+    fclose(ft);
 }
 
 void pengurutan(){
