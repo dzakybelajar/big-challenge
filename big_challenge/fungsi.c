@@ -125,7 +125,6 @@ void simpan_ke_biner(){
 }
 
 void ambil_dari_biner(int n){
-    Abjad sampah[26];
     FILE *fp=fopen("binary.bin","rb");
 
     if (fp==NULL)
@@ -151,8 +150,8 @@ void ambil_dari_biner(int n){
         fread(&abjd_baca[i].jumlah_kata,sizeof(int),1,fp);
         abjd_baca[i].daftar_kata=malloc(abjd_baca[i].jumlah_kata*sizeof(Kata));
         j=0;
-        int k=0;
-        int batas;
+        int batas,sampah1,sampah3;
+        char sampah2[100];
         if (abjd_baca[i].jumlah_kata<=n)
         { batas=abjd_baca[i].jumlah_kata; }
         else if (abjd_baca[i].jumlah_kata>n)
@@ -174,10 +173,9 @@ void ambil_dari_biner(int n){
             
             else if (j>=batas)
             { 
-                fread(&sampah[i].daftar_kata[k].panjang_kata,sizeof(int),1,fp);
-                sampah[i].daftar_kata[k].kata=malloc(sampah[i].daftar_kata[k].panjang_kata+1);
-                fread(sampah[i].daftar_kata[k].kata,sizeof(char),sampah[i].daftar_kata[k].panjang_kata+1,fp);
-                fread(&sampah[i].daftar_kata[k].frekuensi,sizeof(int),1,fp); k++;
+                fread(&sampah1,sizeof(int),1,fp);
+                fread(&sampah2,sizeof(char),sampah1+1,fp);
+                fread(&sampah3,sizeof(int),1,fp); 
             }  
             j++;
         }
