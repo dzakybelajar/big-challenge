@@ -39,12 +39,12 @@ void olah_teks(char file[]){
             continue;
         }
         for(int i = 0; buffer[i] != ' '; i++){
-        if(buffer [i] == '<'){
-            while(buffer[i] != '>' && buffer[i] != '\0'){
-                i++;
+            if(buffer [i] == '<'){
+                while(buffer[i] != '>' && buffer[i] != '\0'){
+                    i++;
+                }
+                continue;
             }
-            continue;
-        }
         }
         int i = 0;
         char ch = buffer[i];
