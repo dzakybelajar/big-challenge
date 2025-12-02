@@ -59,7 +59,6 @@ void olah_teks(char file[]){
             continue;
             }
            
-            abjad[i].abjad = ch;
         }
     }
     fclose(ft);
