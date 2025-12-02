@@ -27,8 +27,6 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
-    char kata_buffer[100];
-    int idx = 0;
     inisialisasi();
     FILE *ft = fopen(file, "r");
         if (ft == NULL) {
