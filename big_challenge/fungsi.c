@@ -160,6 +160,8 @@ void ambil_dari_biner(int n){
     //baca file binary dan tampilin ke terminal
     int i=0;
     int j;
+
+    printf("abjad   {kata(frekuensi)}");
     while (i!=26)
     {
         fread(&abjd_baca[i].abjad,sizeof(char),1,fp);
