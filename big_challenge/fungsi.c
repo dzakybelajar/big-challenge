@@ -4,14 +4,14 @@
 
 typedef struct {
     int panjang_kata;
-    char *kata;
+    char kata[50];
     int frekuensi;
 }Kata;
 
 typedef struct {
     char abjad;
     int jumlah_kata;
-    Kata *daftar_kata;
+    Kata daftar_kata[500000];
 }Abjad;
 
 Abjad abjad[26];
@@ -21,8 +21,7 @@ void inisialisasi(){
 for(int i=0;i<26;i++) {
     abjad[i].abjad = 'a' + i;
     abjad[i].jumlah_kata = 0;
-    abjad[i].daftar_kata = NULL;
-}
+    }
 }
 
 void olah_teks(char file[]){
@@ -167,7 +166,6 @@ void ambil_dari_biner(int n){
         fread(&abjd_baca[i].abjad,sizeof(char),1,fp);
         printf("%c\t{",abjd_baca[i].abjad);
         fread(&abjd_baca[i].jumlah_kata,sizeof(int),1,fp);
-        abjd_baca[i].daftar_kata=malloc(abjd_baca[i].jumlah_kata*sizeof(Kata));
         j=0;
         int batas,sampah1,sampah3;
         char sampah2[100];
@@ -181,7 +179,6 @@ void ambil_dari_biner(int n){
             if (j<batas)
             {
                 fread(&abjd_baca[i].daftar_kata[j].panjang_kata,sizeof(int),1,fp);
-                abjd_baca[i].daftar_kata[j].kata=malloc(abjd_baca[i].daftar_kata[j].panjang_kata+1);
                 fread(abjd_baca[i].daftar_kata[j].kata,sizeof(char),abjd_baca[i].daftar_kata[j].panjang_kata+1,fp);
                 printf("%s",abjd_baca[i].daftar_kata[j].kata);
                 fread(&abjd_baca[i].daftar_kata[j].frekuensi,sizeof(int),1,fp); 
