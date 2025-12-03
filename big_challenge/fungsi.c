@@ -11,7 +11,7 @@ typedef struct {
 typedef struct {
     char abjad;
     int jumlah_kata;
-    Kata daftar_kata[500000];
+    Kata daftar_kata[50000];
 }Abjad;
 
 Abjad abjad[26];
