@@ -1,4 +1,3 @@
-
 void inisialisasi();
 void olah_teks(char file[]);
 void pengurutan();
