@@ -64,7 +64,7 @@ void olah_teks(char file[]){
                 ch += 32;
             }
             if(!(ch >= 'a' && ch <= 'z')){
-            continue;
+                continue;
             }
            
         }
