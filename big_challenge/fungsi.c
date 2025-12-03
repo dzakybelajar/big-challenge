@@ -17,6 +17,8 @@ typedef struct {
 Abjad abjad[26];
 Abjad abjd_baca[26];
 
+void pengurutan();
+
 void inisialisasi(){
 for(int i=0;i<26;i++) {
     abjad[i].abjad = 'a' + i;
@@ -34,7 +36,7 @@ void olah_teks(char file[]){
     FILE *ft = fopen(file, "r");
         if (ft == NULL) {
             printf("File tidak ditemukan!\n");
-            return 1;
+            return;
         }
     
     while(fgets(buffer, sizeof(buffer), ft) != 0){
@@ -232,7 +234,7 @@ void ambil_dari_biner(int n){
     int i=0;
     int j;
 
-    printf("abjad   {kata(frekuensi)}");
+    printf("abjad   {kata(frekuensi)}\n");
     while (i!=26)
     {
         fread(&abjd_baca[i].abjad,sizeof(char),1,fp);
