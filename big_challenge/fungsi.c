@@ -140,6 +140,7 @@ void olah_teks(char file[]){
         } 
     }
     fclose(ft);
+    pengurutan();
 }
 
 void pengurutan(){
