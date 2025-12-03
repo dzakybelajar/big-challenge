@@ -26,7 +26,11 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
+    char kata[100];
+    int url = 0;
+    Kata word;
     inisialisasi();
+
     FILE *ft = fopen(file, "r");
         if (ft == NULL) {
             printf("File tidak ditemukan!\n");
@@ -37,36 +41,103 @@ void olah_teks(char file[]){
         
         buffer[strcspn(buffer, "\n")] = '\0';
 
-        if (strcmp(buffer, "<url>") == 0){
-            continue;
+        if (!url){
+            if(strcmp(buffer, "<url>") == 0){
+                url = 1;
+                continue;
+            }
         }
-        if (strcmp(buffer, "</url>") == 0) {
-            continue;
+        else {
+            if(strcmp(buffer, "</url>") == 0) {
+                url = 0;
+                continue;
+            }
         }
-        
+
         int inTag = 0;
+        int k = 0;
+        kata[0] = '\0';
+
         for(int i = 0; buffer[i] != '\0'; i++){
             char ch = buffer[i];
+
             if (!inTag){
-                if(buffer [i] == '<'){
+                if(ch == '<'){
                     inTag = 1;
                     continue;
                 }
             }
             else {
-                if(buffer[i] == '>'){
+                if(ch == '>'){
                     inTag = 0;
+                    continue;
                 }
-                continue;
             }
+
             if (ch >= 'A' && ch <= 'Z'){
                 ch += 32;
             }
-            if(!(ch >= 'a' && ch <= 'z')){
-                continue;
+
+            if(ch >= 'a' && ch <= 'z'){
+                kata[k++] = ch;
+                kata[k] = '\0';
             }
-           
-        }
+            else{
+                if(k > 0){
+                    if(kata[0] < 'a' || kata[0] > 'z'){
+                        k = 0;
+                        kata[0] = '\0';
+                        continue;
+                    }
+
+                    int index = kata[0] - 'a';
+                    int found = 0;
+                    
+                    for(int j = 0; j < abjad[index].jumlah_kata; j++){
+                        if(strcmp(abjad[index].daftar_kata[j].kata, kata) == 0){
+                            abjad[index].daftar_kata[j].frekuensi++;
+                            found = 1;
+                            break;
+                        }
+                    }
+                    if(!found){
+                        strcpy(word.kata, kata);
+                        word.panjang_kata = strlen(kata);
+                        word.frekuensi = 1;
+                        abjad[index].daftar_kata[abjad[index].jumlah_kata++] = word;
+                    }
+                    k = 0;
+                    kata[0] = '\0';
+                }
+            }
+        }  
+        if(k > 0){
+
+                if(kata[0] < 'a' || kata[0] > 'z'){
+                continue;
+                }
+
+                int index = kata[0] - 'a';
+                int found = 0;
+
+
+                for(int j = 0; j < abjad[index].jumlah_kata; j++){
+                    if(strcmp(abjad[index].daftar_kata[j].kata, kata) == 0){
+                        abjad[index].daftar_kata[j].frekuensi++;
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if(!found){
+                    strcpy(word.kata, kata);
+                    word.panjang_kata = strlen(kata);
+                    word.frekuensi = 1;
+
+                    abjad[index].daftar_kata[abjad[index].jumlah_kata++] = word;
+        
+                }
+        } 
     }
     fclose(ft);
 }

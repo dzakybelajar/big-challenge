@@ -10,6 +10,9 @@ typedef struct {
     Kata *daftar_kata;
 }Abjad;
 
+Abjad abjad[26];
+Abjad abjd_baca[26];
+
 void inisialisasi();
 void olah_teks(char file[]);
 void hitung_frekuensi(Kata freq);
