@@ -128,7 +128,7 @@ void olah_teks(char file[]){
                 }
         } 
     }
-    fclose(ft);
+    fclose(ft); 
     pengurutan();
 }
 
