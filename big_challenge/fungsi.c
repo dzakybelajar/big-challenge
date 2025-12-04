@@ -1,23 +1,10 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-
-typedef struct {
-    int panjang_kata;
-    char kata[50];
-    int frekuensi;
-}Kata;
-
-typedef struct {
-    char abjad;
-    int jumlah_kata;
-    Kata daftar_kata[50000];
-}Abjad;
+#include "header.h"
 
 Abjad abjad[26];
 Abjad abjd_baca[26];
-
-void pengurutan();
 
 void inisialisasi(){
 for(int i=0;i<26;i++) {
