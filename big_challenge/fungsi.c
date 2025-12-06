@@ -45,6 +45,8 @@ void olah_teks(char file[]){
             continue;
         }
 
+        m = 0;
+        bersih[m] = '\0';
         for(int i = 0; buffer[i] != '\0'; i++){
             char ch = buffer[i];
 
@@ -59,8 +61,7 @@ void olah_teks(char file[]){
                 bersih[m++] = ' ';
             }
         }
-        buffer[m] = '\0';
-        m = 0;
+        bersih[m] = '\0';
 
         strcat(baru, bersih);
         strcat(baru, " ");
@@ -72,6 +73,10 @@ void olah_teks(char file[]){
             char *kata = strtok(isi, " ");
 
             while(kata != NULL){
+                if (kata[0] < 'a' || kata[0] > 'z'){
+                    kata = strtok(NULL, " ");
+                    continue;
+                }
                 int awal = kata[0] - 'a';
                 int ketemu = 0;
                 int n = abjad[awal].jumlah_kata;
