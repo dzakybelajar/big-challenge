@@ -15,6 +15,7 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
+    char bersih[500000];
     char baru[500000]= "";
     int url = 0;
     int m = 0; 
@@ -52,16 +53,16 @@ void olah_teks(char file[]){
             }
 
             if(ch >= 'a' && ch <= 'z'){
-                buffer[m++] = ch;
+                bersih[m++] = ch;
             }  
             else {
-                buffer[m++] = ' ';
+                bersih[m++] = ' ';
             }
         }
         buffer[m] = '\0';
         m = 0;
 
-        strcat(baru, buffer);
+        strcat(baru, bersih);
         strcat(baru, " ");
     }
 
