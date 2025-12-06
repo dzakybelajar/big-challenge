@@ -67,11 +67,7 @@ void olah_teks(char file[]){
         strcat(baru, " ");
     }
 
-    char *isi = strtok(baru , "><");
-
-        while(isi != NULL){
-            char *kata = strtok(isi, " ");
-
+    char *kata = strtok(baru , " ");
             while(kata != NULL){
                 if (kata[0] < 'a' || kata[0] > 'z'){
                     kata = strtok(NULL, " ");
@@ -104,10 +100,8 @@ void olah_teks(char file[]){
                     abjad[awal].daftar_kata[n].panjang_kata = strlen(kata);
                     abjad[awal].daftar_kata[n].frekuensi = 1;
                     abjad[awal].jumlah_kata++;
-                }
-                kata = strtok(NULL, " ");
             }
-            isi = strtok(NULL, "><");
+            kata = strtok(NULL, " ");
         }
     fclose(ft); 
     pengurutan();
