@@ -15,10 +15,10 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
-    char bersih[500000];
     char baru[500000]= "";
     int url = 0;
-    int m = 0; 
+    int title = 0;
+    int body = 0;
     inisialisasi();
 
     FILE *ft = fopen(file, "r");
@@ -28,65 +28,138 @@ void olah_teks(char file[]){
         }
     
     while(fgets(buffer, sizeof(buffer), ft) != 0){
-        if(strstr(buffer, "<url>") && strstr(buffer, "</url>")){
-            continue;
-        }
-    
         if(strstr(buffer, "<url>")){
             url = 1;
             continue;
         }
-        if(strstr(buffer, "</url>")) {
+        if (url == 1){
+            if(strstr(buffer, "</url>")){
             url = 0;
             continue;
+            }
+            else{
+                continue;
+            }
         }
-            
-        if (url == 1){
+    
+        if(strstr(buffer, "<title>")){
+            title = 1;
+            baru[0] = '\0';
+            char *mulai = strstr(buffer, "<title>") + strlen("<title>");
+            char *akhir = strstr(buffer, "</title>");
+
+            if (akhir){
+                int judul = akhir - mulai;
+                strncpy(baru, mulai, judul);
+                baru[judul] = '\0';
+                proses(baru);
+                title = 0;
+                continue;
+            }
+            else{
+                strcpy(baru, mulai);
+                title = 1;
+                continue;
+            }
+        }
+        if (title == 1){
+            char *akhir = strstr(buffer, "</title>");
+            if (akhir){
+                int judul = akhir - buffer;
+                strncat(baru, buffer, judul);
+                proses(baru);
+                title = 0;
+                continue;
+            }
+            else{
+                strcat(baru, buffer);
+                continue;
+            }
+        }
+        
+        if(strstr(buffer, "<body>")){
+            body = 1;
+            baru[0] = '\0';
+            char *mulai = strstr(buffer, "<body>") + strlen("<body>");
+            char *akhir = strstr(buffer, "</body>");
+
+            if (akhir){
+                int badan = akhir - mulai;
+                strncpy(baru, mulai, badan);
+                baru[badan] = '\0';
+                proses(baru);
+                body = 0;
+                continue;
+            }
+            else{
+                strcpy(baru, mulai);
+                body = 1;
+                continue;
+            }
             continue;
         }
-
-        m = 0;
-        bersih[m] = '\0';
-        for(int i = 0; buffer[i] != '\0'; i++){
-            char ch = buffer[i];
-
-            if (ch >= 'A' && ch <= 'Z'){
-                ch += 32;
+        if (body == 1){
+            char *akhir = strstr(buffer, "</body>");
+            if (akhir){
+                int badan = akhir - buffer;
+                strncat(baru, buffer, badan);
+                proses(baru);
+                body = 0;
+                continue;
             }
-
-            if(ch >= 'a' && ch <= 'z'){
-                bersih[m++] = ch;
-            }  
-            else {
-                bersih[m++] = ' ';
+            else{
+                strcat(baru, buffer);
+                continue;
             }
         }
-        bersih[m] = '\0';
+    }     
+    fclose(ft); 
+    pengurutan();
+}
 
-        strcat(baru, bersih);
-        strcat(baru, " ");
+void proses(char teks[]){
+    char bersih[500000];
+    int m = 0;
+
+    m = 0;
+    bersih[m] = '\0';
+    for(int i = 0; teks[i] != '\0'; i++){
+        char ch = teks[i];
+
+        if (ch >= 'A' && ch <= 'Z'){
+            ch += 32;
+        }
+
+        if(ch >= 'a' && ch <= 'z'){
+            bersih[m++] = ch;
+        }  
+        else {
+            bersih[m++] = ' ';
+        }
     }
+    bersih[m] = '\0';
 
-    char *kata = strtok(baru , " ");
-            while(kata != NULL){
-                if (kata[0] < 'a' || kata[0] > 'z'){
-                    kata = strtok(NULL, " ");
-                    continue;
-                }
-                int awal = kata[0] - 'a';
-                int ketemu = 0;
-                int n = abjad[awal].jumlah_kata;
+    char *kata = strtok(bersih , " ");
+        while(kata != NULL){
+            if (kata[0] < 'a' || kata[0] > 'z'){
+                kata = strtok(NULL, " ");
+                continue;
+            }
+            int awal = kata[0] - 'a';
+            int ketemu = 0;
+            int n = abjad[awal].jumlah_kata;
 
-                if(n == 0){
-                    strcpy(abjad[awal].daftar_kata[0].kata, kata);
-                    abjad[awal].daftar_kata[0].panjang_kata = strlen(kata);
-                    abjad[awal].daftar_kata[0].frekuensi = 1;
-                    abjad[awal].jumlah_kata = 1;
+            if(n == 0){
+                strcpy(abjad[awal].daftar_kata[0].kata, kata);
+                abjad[awal].daftar_kata[0].panjang_kata = strlen(kata);
+                abjad[awal].daftar_kata[0].frekuensi = 1;
+                abjad[awal].jumlah_kata = 1;
 
-                    kata = strtok(NULL, " ");
-                    continue;
-                }
+                kata = strtok(NULL, " ");
+                continue;
+            }
 
+            else{
                 for (int i = 0; i < n; i++){
                     if(strcmp(abjad[awal].daftar_kata[i].kata, kata)== 0){
                         abjad[awal].daftar_kata[i].frekuensi += 1;
@@ -100,11 +173,10 @@ void olah_teks(char file[]){
                     abjad[awal].daftar_kata[n].panjang_kata = strlen(kata);
                     abjad[awal].daftar_kata[n].frekuensi = 1;
                     abjad[awal].jumlah_kata++;
+                }
             }
-            kata = strtok(NULL, " ");
+                    kata = strtok(NULL, " ");
         }
-    fclose(ft); 
-    pengurutan();
 }
 
 void pengurutan(){
