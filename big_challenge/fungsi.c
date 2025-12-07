@@ -16,9 +16,7 @@ for(int i=0;i<26;i++) {
 void olah_teks(char file[]){
     char buffer[500000];
     char baru[500000]= "";
-    int url = 0;
-    int title = 0;
-    int body = 0;
+    char gabung[500000]= "";
     inisialisasi();
 
     FILE *ft = fopen(file, "r");
@@ -27,92 +25,72 @@ void olah_teks(char file[]){
             return;
         }
     
+    int url = 0;
+    int title = 0;
+    int body = 0;
     while(fgets(buffer, sizeof(buffer), ft) != 0){
-        if(strstr(buffer, "<url>")){
-            url = 1;
-            continue;
-        }
-        if (url == 1){
-            if(strstr(buffer, "</url>")){
-            url = 0;
-            continue;
+        char *sisa = buffer;
+
+        
+        if(url || strstr(sisa, "<url>")){
+            char *akhir = strstr(sisa, "</url>");
+
+            if(akhir){
+                url = 0;
+                sisa = akhir + strlen("</url>");
             }
             else{
-                continue;
+            url = 1;
+            continue;
             }
         }
     
-        if(strstr(buffer, "<title>")){
-            title = 1;
-            baru[0] = '\0';
-            char *mulai = strstr(buffer, "<title>") + strlen("<title>");
-            char *akhir = strstr(buffer, "</title>");
+        if(strstr(sisa, "<title>") || title){
+            char *mulai = title ? sisa : strstr(sisa, "<title>") + 7;
+            char *akhir = strstr(sisa, "</title>");
 
             if (akhir){
                 int judul = akhir - mulai;
-                strncpy(baru, mulai, judul);
-                baru[judul] = '\0';
-                proses(baru);
+                if(strlen(baru) + judul < sizeof(baru)){
+                    strncat(baru, mulai, judul);
+                }
+                strcat(gabung, baru);
+                baru[0] = '\0';
+    
                 title = 0;
-                continue;
+                sisa = akhir + strlen("</title>");
+            
             }
             else{
-                strcpy(baru, mulai);
+                strcat(baru, mulai);
                 title = 1;
                 continue;
             }
         }
-        if (title == 1){
-            char *akhir = strstr(buffer, "</title>");
-            if (akhir){
-                int judul = akhir - buffer;
-                strncat(baru, buffer, judul);
-                proses(baru);
-                title = 0;
-                continue;
-            }
-            else{
-                strcat(baru, buffer);
-                continue;
-            }
-        }
         
-        if(strstr(buffer, "<body>")){
-            body = 1;
-            baru[0] = '\0';
-            char *mulai = strstr(buffer, "<body>") + strlen("<body>");
-            char *akhir = strstr(buffer, "</body>");
+        if(strstr(sisa, "<body>") || body){
+            char *mulai = body ? sisa : strstr(sisa, "<body>") + 6;
+            char *akhir = strstr(sisa, "</body>");
 
             if (akhir){
                 int badan = akhir - mulai;
-                strncpy(baru, mulai, badan);
-                baru[badan] = '\0';
-                proses(baru);
+                if(badan >0){
+                    if(strlen(baru) + badan < sizeof(baru)){
+                        strncat(baru, mulai, badan);
+                    }
+                }
+                strcat(gabung, baru);
+                baru[0] ='\0';
                 body = 0;
-                continue;
             }
             else{
-                strcpy(baru, mulai);
+                strcat(baru, mulai);
                 body = 1;
                 continue;
             }
-            continue;
         }
-        if (body == 1){
-            char *akhir = strstr(buffer, "</body>");
-            if (akhir){
-                int badan = akhir - buffer;
-                strncat(baru, buffer, badan);
-                proses(baru);
-                body = 0;
-                continue;
-            }
-            else{
-                strcat(baru, buffer);
-                continue;
-            }
-        }
-    }     
+    }
+    proses(gabung);     
     fclose(ft); 
     pengurutan();
 }
