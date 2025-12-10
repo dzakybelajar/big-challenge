@@ -15,8 +15,9 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
-    char baru[500000]= "";
+    // char baru[500000]= "";
     char gabung[500000]= "";
+    gabung[0] = '\0';
     inisialisasi();
 
     FILE *ft = fopen(file, "r");
@@ -26,69 +27,154 @@ void olah_teks(char file[]){
         }
     
     int url = 0;
+    // int tag = 0;
     int title = 0;
     int body = 0;
     while(fgets(buffer, sizeof(buffer), ft) != 0){
         char *sisa = buffer;
 
-        
-        if(url || strstr(sisa, "<url>")){
-            char *akhir = strstr(sisa, "</url>");
-
-            if(akhir){
+        //skip url
+        if(url == 1){
+            if(strncmp(sisa, "</url>", 6) == 0){
                 url = 0;
-                sisa = akhir + strlen("</url>");
+                sisa += 6;
             }
             else{
-            url = 1;
-            continue;
-            }
-        }
-    
-        if(strstr(sisa, "<title>") || title){
-            char *mulai = title ? sisa : strstr(sisa, "<title>") + 7;
-            char *akhir = strstr(sisa, "</title>");
-
-            if (akhir){
-                int judul = akhir - mulai;
-                if(strlen(baru) + judul < sizeof(baru)){
-                    strncat(baru, mulai, judul);
-                }
-                strcat(gabung, baru);
-                baru[0] = '\0';
-    
-                title = 0;
-                sisa = akhir + strlen("</title>");
-            
-            }
-            else{
-                strcat(baru, mulai);
-                title = 1;
                 continue;
             }
         }
+
+            if(strncmp(sisa, "<url>", 5) == 0){
+                url = 1;
+                sisa += 5;
+                continue;
+            }
         
-        if(strstr(sisa, "<body>") || body){
-            char *mulai = body ? sisa : strstr(sisa, "<body>") + 6;
-            char *akhir = strstr(sisa, "</body>");
-
-            if (akhir){
-                int badan = akhir - mulai;
-                if(badan >0){
-                    if(strlen(baru) + badan < sizeof(baru)){
-                        strncat(baru, mulai, badan);
-                    }
-                }
-                strcat(gabung, baru);
-                baru[0] ='\0';
-                body = 0;
-            }
-            else{
-                strcat(baru, mulai);
-                body = 1;
+        //ambil substring diantara <title>...</title>
+        while(*sisa != '\0'){
+            if(!title && strncmp(sisa, "<title>", 7) == 0){
+                title = 1;
+                sisa += 7;
                 continue;
             }
+            if(title && strncmp(sisa, "</title>", 8)== 0){
+                title = 0;
+                sisa+= 8;
+                continue;
+            }
+            if(!body && strncmp(sisa, "<body>", 6) == 0){
+                body = 1;
+                sisa += 6;
+                continue;
+            }
+            if(body && strncmp(sisa, "</body>", 7)== 0){
+                body = 0;
+                sisa+= 8;
+                continue;
+            }
+             if (title || body) {
+                strncat(gabung, sisa, 1);
+            }
+
+            sisa++;
         }
+        //     if (tag == 1){
+        //         if(*sisa == '>'){
+        //             tag = 0;
+        //             sisa++;
+        //         }
+        //         else{
+        //             sisa++;
+        //         }
+        //         continue;
+        //     }
+            
+        //     if (*sisa == '<'){
+        //         tag = 1;
+        //         sisa++;
+        //         continue;
+        //     }
+
+        //     strncat(gabung, sisa,1);
+        //     sisa++;
+        // }
+        // if (title == 1){
+        //     if(strncmp(sisa, "</title>", 8) == 0){
+        //     title = 0;
+        //     sisa += 8;
+        //     continue;
+        //     }
+        //     else{
+        //         strcat(gabung, sisa);
+        //     }
+        
+        // }
+        // if(strncmp(sisa, "<title>", 7) == 0){
+        //     title = 1;
+        //     sisa  += 7;
+        //     continue;
+        // }
+
+        // if (body == 1){
+        //     if(strncmp(sisa, "</body>", 7) == 0){
+        //     body = 0;
+        //     sisa += 7;
+        //     continue;
+        //     }
+        //     else{
+        //         strcat(gabung, sisa);
+        //     }
+        
+        // }
+        // if(strncmp(sisa, "<body>", 6) == 0){
+        //     body = 1;
+        //     sisa  += 6;
+        //     continue;
+        // }
+        // if(strstr(sisa, "<title>") || title){
+        //     char *mulai = title ? sisa : strstr(sisa, "<title>") + 7;
+        //     char *akhir = strstr(sisa, "</title>");
+
+        //     if (akhir){
+        //         int judul = akhir - mulai;
+        //         if(strlen(baru) + judul < sizeof(baru)){
+        //             strncat(baru, mulai, judul);
+        //         }
+        //         strcat(gabung, baru);
+        //         baru[0] = '\0';
+    
+        //         title = 0;
+        //         sisa = akhir + strlen("</title>");
+            
+        //     }
+        //     else{
+        //         strcat(baru, mulai);
+        //         title = 1;
+        //         continue;
+        //     }
+        // }
+        // //ambil substring diantara <body>...</body>
+        // if(strstr(sisa, "<body>") || body){
+        //     char *mulai = body ? sisa : strstr(sisa, "<body>") + 6;
+        //     char *akhir = strstr(sisa, "</body>");
+
+        //     if (akhir){
+        //         int badan = akhir - mulai;
+        //         if(badan >0){
+        //             if(strlen(baru) + badan < sizeof(baru)){
+        //                 strncat(baru, mulai, badan);
+        //             }
+        //         }
+        //         strcat(gabung, baru);
+        //         baru[0] ='\0';
+        //         body = 0;
+        //     }
+        //     else{
+        //         strcat(baru, mulai);
+        //         body = 1;
+        //         continue;
+        //     }
+        // }
     }
     proses(gabung);     
     fclose(ft); 
@@ -98,7 +184,7 @@ void olah_teks(char file[]){
 void proses(char teks[]){
     char bersih[500000];
     int m = 0;
-
+    //ubah ke huruf kecil dan ganti yang bukan huruf menjadi spasi
     m = 0;
     bersih[m] = '\0';
     for(int i = 0; teks[i] != '\0'; i++){
@@ -116,7 +202,7 @@ void proses(char teks[]){
         }
     }
     bersih[m] = '\0';
-
+    //tokenisasi dan masukin ke stuct
     char *kata = strtok(bersih , " ");
         while(kata != NULL){
             if (kata[0] < 'a' || kata[0] > 'z'){
