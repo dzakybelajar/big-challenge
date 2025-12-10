@@ -62,6 +62,7 @@ void olah_teks(char file[]){
                 sisa+= 8;
                 continue;
             }
+            
             if(!body && strncmp(sisa, "<body>", 6) == 0){
                 body = 1;
                 sisa += 6;
