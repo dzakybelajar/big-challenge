@@ -34,6 +34,7 @@ void olah_teks(char file[]){
         char *sisa = buffer;
 
         while(*sisa){
+            //hapus semua samapai </url>
             if (!url && strncmp(sisa, "<url>", 5) == 0){
                 url = 1;
                 sisa += 5;
@@ -48,7 +49,7 @@ void olah_teks(char file[]){
                 sisa++;
                 continue;
             }
-
+            //ambil substring antara <title>...</title>
             if (!title && strncmp(sisa, "<title>", 7) == 0){
                 title = 1;
                 sisa += 7;
@@ -60,7 +61,7 @@ void olah_teks(char file[]){
                 strcat(gabung, " ");
                 continue;
             }
-            
+            //ambil substring antara <body>...</body>
             if (!body && strncmp(sisa, "<body>", 6) == 0){
                 body = 1;
                 sisa += 6;
@@ -71,7 +72,7 @@ void olah_teks(char file[]){
                 sisa += 7;
                 continue;
             }
-
+            //gabungkan title dan body
             if (title || body){
                 strncat(gabung, sisa, 1);
             }
