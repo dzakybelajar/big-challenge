@@ -33,52 +33,98 @@ void olah_teks(char file[]){
     while(fgets(buffer, sizeof(buffer), ft) != 0){
         char *sisa = buffer;
 
-        //skip url
-        if(url == 1){
-            if(strncmp(sisa, "</url>", 6) == 0){
-                url = 0;
-                sisa += 6;
-            }
-            else{
-                continue;
-            }
-        }
-
-            if(strncmp(sisa, "<url>", 5) == 0){
+        while(*sisa){
+            if (!url && strncmp(sisa, "<url>", 5) == 0){
                 url = 1;
                 sisa += 5;
                 continue;
             }
-        
-        //ambil substring diantara <title>...</title>
-        while(*sisa != '\0'){
-            if(!title && strncmp(sisa, "<title>", 7) == 0){
+            if(url && strncmp(sisa, "</url>", 6) == 0){
+                url = 0;
+                sisa += 6;
+                continue;
+            }
+            if (url){
+                sisa++;
+                continue;
+            }
+
+            if (!title && strncmp(sisa, "<title>", 7) == 0){
                 title = 1;
                 sisa += 7;
                 continue;
             }
-            if(title && strncmp(sisa, "</title>", 8)== 0){
+            if(title && strncmp(sisa, "</title>", 8) == 0){
                 title = 0;
-                sisa+= 8;
+                sisa += 8;
+                strcat(gabung, " ");
                 continue;
             }
             
-            if(!body && strncmp(sisa, "<body>", 6) == 0){
+            if (!body && strncmp(sisa, "<body>", 6) == 0){
                 body = 1;
                 sisa += 6;
                 continue;
             }
-            if(body && strncmp(sisa, "</body>", 7)== 0){
+            if(body && strncmp(sisa, "</body>", 7) == 0){
                 body = 0;
-                sisa+= 8;
+                sisa += 7;
                 continue;
             }
-             if (title || body) {
+
+            if (title || body){
                 strncat(gabung, sisa, 1);
             }
 
             sisa++;
+            
         }
+        //skip url
+        // if(url == 1){
+        //     if(strncmp(sisa, "</url>", 6) == 0){
+        //         url = 0;
+        //         sisa += 6;
+        //     }
+        //     else{
+        //         continue;
+        //     }
+        // }
+
+        //     if(strncmp(sisa, "<url>", 5) == 0){
+        //         url = 1;
+        //         sisa += 5;
+        //         continue;
+        //     }
+        
+        // //ambil substring diantara <title>...</title>
+        // while(*sisa != '\0'){
+        //     if(!title && strncmp(sisa, "<title>", 7) == 0){
+        //         title = 1;
+        //         sisa += 7;
+        //         continue;
+        //     }
+        //     if(title && strncmp(sisa, "</title>", 8)== 0){
+        //         title = 0;
+        //         sisa+= 8;
+        //         continue;
+        //     }
+            
+        //     if(!body && strncmp(sisa, "<body>", 6) == 0){
+        //         body = 1;
+        //         sisa += 6;
+        //         continue;
+        //     }
+        //     if(body && strncmp(sisa, "</body>", 7)== 0){
+        //         body = 0;
+        //         sisa+= 7;
+        //         continue;
+        //     }
+        //      if (title || body) {
+        //         strncat(gabung, sisa, 1);
+        //     }
+
+        //     sisa++;
+        // }
         //     if (tag == 1){
         //         if(*sisa == '>'){
         //             tag = 0;
