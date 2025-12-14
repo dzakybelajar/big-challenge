@@ -15,7 +15,6 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
-    // char baru[500000]= "";
     char gabung[500000]= "";
     gabung[0] = '\0';
     inisialisasi();
@@ -27,14 +26,13 @@ void olah_teks(char file[]){
         }
     
     int url = 0;
-    // int tag = 0;
     int title = 0;
     int body = 0;
     while(fgets(buffer, sizeof(buffer), ft) != 0){
         char *sisa = buffer;
 
         while(*sisa){
-            //hapus semua samapai </url>
+            //hapus semua sampai </url>
             if (!url && strncmp(sisa, "<url>", 5) == 0){
                 url = 1;
                 sisa += 5;
