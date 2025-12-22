@@ -78,8 +78,10 @@ void olah_teks(char file[]){
             sisa++;
             
         }
-    }
-    proses(gabung);     
+    proses(gabung);
+    buffer[0]='\0';
+    gabung[0]='\0';
+    }     
     fclose(ft); 
     pengurutan();
 }
@@ -144,6 +146,7 @@ void proses(char teks[]){
             }
                     kata = strtok(NULL, " ");
         }
+        bersih[0]='\0';
 }
 
 void pengurutan(){
