@@ -257,12 +257,14 @@ void ambil_dari_biner(int n,char nama_file_binary[]){
             if (j<batas)
             {
                 fread(&abjd_baca[i].daftar_kata[j].panjang_kata,sizeof(int),1,fp);
-                fread(abjd_baca[i].daftar_kata[j].kata,sizeof(char),abjd_baca[i].daftar_kata[j].panjang_kata+1,fp);
+                fread(abjd_baca[i].daftar_kata[j].kata,sizeof(char),abjd_baca[i].daftar_kata[j].panjang_kata+1,fp); 
                 printf("%s",abjd_baca[i].daftar_kata[j].kata);
                 fread(&abjd_baca[i].daftar_kata[j].frekuensi,sizeof(int),1,fp); 
                 printf("(%d)",abjd_baca[i].daftar_kata[j].frekuensi);
                 if (j<batas-1)
-                { printf(","); }
+                { printf(","); } 
+                if (j==5 || j==11 || j==17 || j==23)
+                { printf("\n        "); } 
             }
             
             else if (j>=batas)

@@ -45,7 +45,7 @@ int main (){
         switch (pilihan)
         {
         case 1:
-            printf("masukkan nama file binary(<nama file>.bin):");
+            printf("masukkan nama file binary:");
             while (getchar() != '\n'); 
             fgets(nama_file_binary,50,stdin);
             nama_file_binary[strcspn(nama_file_binary,"\n")]='\0'; 
