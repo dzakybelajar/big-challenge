@@ -14,5 +14,5 @@ void inisialisasi();
 void olah_teks(char file[]);
 void proses(char tek[]);
 void pengurutan();
-void simpan_ke_biner();
-void ambil_dari_biner(int);
+void simpan_ke_biner(char nama_file_binary[]);
+void ambil_dari_biner(int,char nama_file_binary[]);

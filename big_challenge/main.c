@@ -1,10 +1,12 @@
 #include<stdio.h>
+#include<string.h>
 #include "header.h"
 
 int main (){
 
     int pilihan,n,p,i=0;
     char file[20];
+    char nama_file_binary[50];
 
     ulang:
     printf("masukkan nama file(txt):");
@@ -43,7 +45,11 @@ int main (){
         switch (pilihan)
         {
         case 1:
-            simpan_ke_biner(); i=1;
+            printf("masukkan nama file binary(<nama file>.bin):");
+            while (getchar() != '\n'); 
+            fgets(nama_file_binary,50,stdin);
+            nama_file_binary[strcspn(nama_file_binary,"\n")]='\0'; 
+            simpan_ke_biner(nama_file_binary); i=1;
             break;
         case 2:
             input_lagi:
@@ -56,7 +62,7 @@ int main (){
                 while (getchar() != '\n');
                 goto input_lagi; }
             else
-            { ambil_dari_biner(n); }
+            { ambil_dari_biner(n,nama_file_binary); }
                 break;
         case 3:
             printf("anda keluar dari program\n"); break;

@@ -198,8 +198,8 @@ void pengurutan(){
     } 
 }
 
-void simpan_ke_biner(){
-   FILE *fp=fopen("binary.bin","wb");
+void simpan_ke_biner(char nama_file_binary[]){
+   FILE *fp=fopen(nama_file_binary,"wb");
    int n=0;
     while (n!=26)
     {   
@@ -218,8 +218,8 @@ void simpan_ke_biner(){
     fclose(fp);
 }
 
-void ambil_dari_biner(int n){
-    FILE *fp=fopen("binary.bin","rb");
+void ambil_dari_biner(int n,char nama_file_binary[]){
+    FILE *fp=fopen(nama_file_binary,"rb");
 
     if (fp==NULL)
     {
