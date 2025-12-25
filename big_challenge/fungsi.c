@@ -142,7 +142,7 @@ void proses(char teks[]){
                     abjad[awal].jumlah_kata++;
                 }
             }
-                    kata = strtok(NULL, " ");
+            kata = strtok(NULL, " ");
         }
 }
 
