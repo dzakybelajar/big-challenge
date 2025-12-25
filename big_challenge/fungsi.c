@@ -74,9 +74,7 @@ void olah_teks(char file[]){
             if (title || body){
                 strncat(gabung, sisa, 1);
             }
-
             sisa++;
-            
         }
     proses(gabung);
     buffer[0]='\0';
