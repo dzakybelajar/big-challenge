@@ -146,7 +146,6 @@ void proses(char teks[]){
             }
                     kata = strtok(NULL, " ");
         }
-        bersih[0]='\0';
 }
 
 void pengurutan(){
