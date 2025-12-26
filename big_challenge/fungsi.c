@@ -260,7 +260,7 @@ void ambil_dari_biner(int n,char nama_file_binary[]){
                 printf("(%d)",abjd_baca[i].daftar_kata[j].frekuensi);
                 if (j<batas-1)
                 { printf(","); } 
-                if (j==5 || j==11 || j==17 || j==23)
+                if (j==4 || j==9 || j==14 || j==19)
                 { printf("\n        "); } 
             }
             
