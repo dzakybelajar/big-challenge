@@ -14,13 +14,13 @@ int main (){
     FILE *fp=fopen(file,"r");
     if (fp==NULL)
     {
-        printf("file tidak ada isi atau file tidak ditemukan!\n");
+        printf("file tidak ditemukan!\n");
         goto ulang;
     }
     int c=fgetc(fp);
     if (c==EOF)
     {
-        printf("file tidak ada isi atau file tidak ditemukan!\n");
+        printf("file tidak ada isi!\n");
         fclose(fp); goto ulang;
     }
     rewind(fp);
