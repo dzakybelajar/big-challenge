@@ -15,8 +15,7 @@ for(int i=0;i<26;i++) {
 
 void olah_teks(char file[]){
     char buffer[500000];
-    char gabung[500000]= "";
-    gabung[0] = '\0';
+    char gabung[500000];
     inisialisasi();
 
     FILE *ft = fopen(file, "r");
@@ -78,7 +77,7 @@ void olah_teks(char file[]){
         }
     proses(gabung);
     buffer[0]='\0';
-    gabung[0]='\0';
+    gabung[0] = '\0';
     }     
     fclose(ft); 
     pengurutan();
