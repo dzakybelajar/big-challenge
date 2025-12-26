@@ -5,6 +5,7 @@
 
 Abjad abjad[26];
 Abjad abjd_baca[26];
+char nama_file_binary[50];
 
 void inisialisasi(){
 for(int i=0;i<26;i++) {
@@ -190,9 +191,14 @@ void pengurutan(){
     } 
 }
 
-void simpan_ke_biner(char nama_file_binary[]){
-   FILE *fp=fopen(nama_file_binary,"wb");
-   int n=0;
+void simpan_ke_biner(){
+    printf("masukkan nama file binary:"); 
+    while (getchar()!='\n');
+    fgets(nama_file_binary,50,stdin);
+    nama_file_binary[strlen(nama_file_binary)-1]='\0';
+
+    FILE *fp=fopen(nama_file_binary,"wb");
+    int n=0;
     while (n!=26)
     {   
         fwrite(&abjad[n].abjad,sizeof(char),1,fp);
@@ -210,12 +216,13 @@ void simpan_ke_biner(char nama_file_binary[]){
     fclose(fp);
 }
 
-void ambil_dari_biner(int n,char nama_file_binary[]){
+void ambil_dari_biner(int n){
     FILE *fp=fopen(nama_file_binary,"rb");
 
     if (fp==NULL)
     {
         printf("file binary tidak ditemukan!\n");
+        printf("simpan ke file binary terlebih dahulu (pilihan 1)!\n");
         return;
     }
     int c=fgetc(fp);

@@ -4,9 +4,8 @@
 
 int main (){
 
-    int pilihan,n,p,i=0;
+    int pilihan,n,p;
     char file[20];
-    char nama_file_binary[50];
 
     ulang:
     printf("masukkan nama file(txt):");
@@ -44,17 +43,11 @@ int main (){
         }
         switch (pilihan)
         {
-        case 1:
-            printf("masukkan nama file binary:");
-            while (getchar() != '\n'); 
-            fgets(nama_file_binary,50,stdin);
-            nama_file_binary[strlen(nama_file_binary)-1]='\0'; 
-            simpan_ke_biner(nama_file_binary); i=1;
+        case 1: 
+            simpan_ke_biner(); 
             break;
         case 2:
             input_lagi:
-            if (i!=1)
-            { printf("simpan ke biner terlebih dahulu (pilihan 1)!\n"); break; }
             printf("banyak kata yang ingin ditampilkan(n):");
             p=scanf("%d",&n);
             if (n<=0 || n>25 || p!=1)
@@ -62,7 +55,7 @@ int main (){
                 while (getchar() != '\n');
                 goto input_lagi; }
             else
-            { ambil_dari_biner(n,nama_file_binary); }
+            { ambil_dari_biner(n); }
                 break;
         case 3:
             printf("anda keluar dari program\n"); break;
