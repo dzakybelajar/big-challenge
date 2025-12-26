@@ -24,8 +24,8 @@ int main (){
         fclose(fp); goto ulang;
     }
     rewind(fp);
-    olah_teks(file);
     fclose(fp);
+    olah_teks(file);
 
     do
     {   

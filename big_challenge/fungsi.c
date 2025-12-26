@@ -19,10 +19,6 @@ void olah_teks(char file[]){
     inisialisasi();
 
     FILE *ft = fopen(file, "r");
-        if (ft == NULL) {
-            printf("File tidak ditemukan!\n");
-            return;
-        }
     
     int url = 0;
     int title = 0;
