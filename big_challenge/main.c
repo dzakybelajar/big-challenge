@@ -48,7 +48,7 @@ int main (){
             printf("masukkan nama file binary:");
             while (getchar() != '\n'); 
             fgets(nama_file_binary,50,stdin);
-            nama_file_binary[strcspn(nama_file_binary,"\n")]='\0'; 
+            nama_file_binary[strlen(nama_file_binary)-1]='\0'; 
             simpan_ke_biner(nama_file_binary); i=1;
             break;
         case 2:
